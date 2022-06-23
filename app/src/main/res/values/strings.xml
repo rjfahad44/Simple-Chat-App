@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Simple Chat App</string>
+
+    <!--    <string name="signup_text">-->
+    <!--        <font color="#000000">Don't have an account?</font> <font color="#02B815">Registration</font>-->
+    <!--    </string>-->
+
+</resources>
