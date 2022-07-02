@@ -3,14 +3,13 @@ package com.tf.simplechatapp
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class UserAdapter(val context: Context, val userList: ArrayList<User>):
+class UserAdapter(private val context: Context, private val userList: ArrayList<User>):
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -37,7 +36,7 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>):
     }
 
     class UserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val profileImage = itemView.findViewById<ImageView>(R.id.profileImage)
-        val userName = itemView.findViewById<TextView>(R.id.userName)
+//        val profileImage: ImageView = itemView.findViewById(R.id.profileImage)
+        val userName: TextView = itemView.findViewById(R.id.userName)
     }
 }

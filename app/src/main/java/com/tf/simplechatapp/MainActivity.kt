@@ -21,6 +21,38 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserAdapter
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
+    private var isNightMode = true
+
+    override fun onStart() {
+        super.onStart()
+        mAuth = FirebaseAuth.getInstance()
+        mDbRef = FirebaseDatabase.getInstance().reference
+
+        userList = ArrayList()
+        adapter = UserAdapter(this, userList)
+
+        rv = findViewById(R.id.rv)
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.adapter = adapter
+
+        mDbRef.child("user").addValueEventListener(object: ValueEventListener{
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    if (mAuth.currentUser?.uid !=user?.uid){
+                        userList.add(user!!)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +93,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        var isNightMode = false
         when(item.itemId){
             R.id.logout->{
                 mAuth.signOut()
